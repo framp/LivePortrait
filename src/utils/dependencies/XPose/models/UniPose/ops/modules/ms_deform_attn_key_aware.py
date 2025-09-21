@@ -19,7 +19,7 @@ import torch.nn.functional as F
 from torch.nn.init import xavier_uniform_, constant_
 
 try:
-    from src.utils.dependencies.XPose.models.UniPose.ops.functions import MSDeformAttnFunction
+    from liveportrait.utils.dependencies.XPose.models.UniPose.ops.functions import MSDeformAttnFunction
 except:
     warnings.warn('Failed to import MSDeformAttnFunction.')
 
