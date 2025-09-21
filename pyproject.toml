@@ -86,3 +86,9 @@ packages = [
 
 [tool.setuptools.package-dir]
 liveportrait = "src"
+
+[tool.setuptools.package-data]
+"liveportrait" = [
+    "utils/resources/*",
+    "config/*.yaml",
+]
