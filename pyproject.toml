@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel", "torch"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -67,7 +67,6 @@ Documentation = "https://github.com/KwaiVGI/LivePortrait"
 [project.scripts]
 liveportrait = "liveportrait.inference:main"
 liveportrait-animals = "liveportrait.inference_animals:main"
-liveportrait-build-msda = "build_msda:build_msda"
 
 [tool.setuptools]
 packages = [
