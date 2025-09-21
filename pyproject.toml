@@ -65,11 +65,36 @@ Repository = "https://github.com/KwaiVGI/LivePortrait"
 Documentation = "https://github.com/KwaiVGI/LivePortrait"
 
 [project.scripts]
-liveportrait = "inference:main"
-liveportrait-animals = "inference_animals:main"
+liveportrait = "liveportrait.inference:main"
+liveportrait-animals = "liveportrait.inference_animals:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = [
+    "liveportrait",
+    "liveportrait.modules",
+    "liveportrait.utils",
+    "liveportrait.utils.dependencies",
+    "liveportrait.utils.dependencies.insightface",
+    "liveportrait.utils.dependencies.insightface.app",
+    "liveportrait.utils.dependencies.insightface.data",
+    "liveportrait.utils.dependencies.insightface.data.images",
+    "liveportrait.utils.dependencies.insightface.data.objects",
+    "liveportrait.utils.dependencies.insightface.model_zoo",
+    "liveportrait.utils.dependencies.insightface.utils",
+    "liveportrait.utils.dependencies.XPose",
+    "liveportrait.utils.dependencies.XPose.config_model",
+    "liveportrait.utils.dependencies.XPose.models",
+    "liveportrait.utils.dependencies.XPose.models.UniPose",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops.functions",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops.modules",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops.src",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops.src.cpu",
+    "liveportrait.utils.dependencies.XPose.models.UniPose.ops.src.cuda",
+    "liveportrait.utils.dependencies.XPose.util",
+    "liveportrait.utils.resources",
+    "liveportrait.config"
+]
 
 [tool.setuptools.package-dir]
 liveportrait = "src"
