@@ -15,7 +15,6 @@ from .timer import *
 from .rprint import *
 from .face_analysis_diy import *
 from .human_landmark_runner import *
-from .animal_landmark_runner import *
 
 __all__ = [
     # camera functions

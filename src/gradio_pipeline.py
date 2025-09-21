@@ -14,7 +14,6 @@ import torch
 
 from .config.argument_config import ArgumentConfig
 from .live_portrait_pipeline import LivePortraitPipeline
-from .live_portrait_pipeline_animal import LivePortraitPipelineAnimal
 from .utils.io import load_img_online, load_video, resize_to_limit
 from .utils.filter import smooth
 from .utils.rprint import rlog as log
@@ -592,74 +591,3 @@ class GradioPipeline(LivePortraitPipeline):
         else:
             # when press the clear button, go here
             raise gr.Error("Please upload a source video as the input 🤗🤗🤗", duration=5)
-
-class GradioPipelineAnimal(LivePortraitPipelineAnimal):
-    """gradio for animal
-    """
-    def __init__(self, inference_cfg, crop_cfg, args: ArgumentConfig):
-        inference_cfg.flag_crop_driving_video = True # ensure the face_analysis_wrapper is enabled
-        super().__init__(inference_cfg, crop_cfg)
-        # self.live_portrait_wrapper_animal = self.live_portrait_wrapper_animal
-        self.args = args
-
-    @torch.no_grad()
-    def execute_video(
-        self,
-        input_source_image_path=None,
-        input_driving_video_path=None,
-        input_driving_video_pickle_path=None,
-        flag_do_crop_input=False,
-        flag_remap_input=False,
-        driving_multiplier=1.0,
-        flag_stitching=False,
-        flag_crop_driving_video_input=False,
-        scale=2.3,
-        vx_ratio=0.0,
-        vy_ratio=-0.125,
-        scale_crop_driving_video=2.2,
-        vx_ratio_crop_driving_video=0.0,
-        vy_ratio_crop_driving_video=-0.1,
-        tab_selection=None,
-    ):
-        """ for video-driven potrait animation
-        """
-        input_source_path = input_source_image_path
-
-        if tab_selection == 'Video':
-            input_driving_path = input_driving_video_path
-        elif tab_selection == 'Pickle':
-            input_driving_path = input_driving_video_pickle_path
-        else:
-            input_driving_path = input_driving_video_pickle_path
-
-        if input_source_path is not None and input_driving_path is not None:
-            if osp.exists(input_driving_path) and tab_selection == 'Video' and is_square_video(input_driving_path) is False:
-                flag_crop_driving_video_input = True
-                log("The driving video is not square, it will be cropped to square automatically.")
-                gr.Info("The driving video is not square, it will be cropped to square automatically.", duration=2)
-
-            args_user = {
-                'source': input_source_path,
-                'driving': input_driving_path,
-                'flag_do_crop': flag_do_crop_input,
-                'flag_pasteback': flag_remap_input,
-                'driving_multiplier': driving_multiplier,
-                'flag_stitching': flag_stitching,
-                'flag_crop_driving_video': flag_crop_driving_video_input,
-                'scale': scale,
-                'vx_ratio': vx_ratio,
-                'vy_ratio': vy_ratio,
-                'scale_crop_driving_video': scale_crop_driving_video,
-                'vx_ratio_crop_driving_video': vx_ratio_crop_driving_video,
-                'vy_ratio_crop_driving_video': vy_ratio_crop_driving_video,
-            }
-            # update config from user input
-            self.args = update_args(self.args, args_user)
-            self.live_portrait_wrapper_animal.update_config(self.args.__dict__)
-            self.cropper.update_config(self.args.__dict__)
-            # video driven animation
-            video_path, video_path_concat, video_gif_path = self.execute(self.args)
-            gr.Info("Run successfully!", duration=2)
-            return video_path, video_path_concat, video_gif_path
-        else:
-            raise gr.Error("Please upload the source animal image, and driving video 🤗🤗🤗", duration=5)

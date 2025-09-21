@@ -7,6 +7,7 @@ from . import utils
 from . import config
 from . import modules
 from .gradio_pipeline import *
+
 __all__ = [
     "LivePortraitWrapper",
     "utils",
